@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9e7cee5b-ae22-4ecb-bf37-8c4effa7d267" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="E:\repository" />
+        <option name="mavenHome" value="D:/HApacheMaven" />
+        <option name="userSettingsFile" value="D:\HApacheMaven\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProjectId" id="2BmH2mG7R5PGHosCSH8iclYmPoJ" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mybatis-test/src/main/resources/com/mybatis/test2" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.19655173" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\mybatis-study\mybatis-test\src\main\resources\com\mybatis\test2" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.mybatis.test2" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\mybatis-study\mybatis-test\src\main\resources\com\mybatis\test" />
+      <recent name="F:\mybatis-study\mybatis-test\src\main\resources" />
+      <recent name="F:\mybatis-study\mybatis-test\src\main\resources\com.mybatis.test" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="MyTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MyTest" />
+      <module name="mybatis-test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MyTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9e7cee5b-ae22-4ecb-bf37-8c4effa7d267" name="Default Changelist" comment="" />
+      <created>1657504135353</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1657504135353</updated>
+      <workItem from="1657504137943" duration="23049000" />
+      <workItem from="1657606829176" duration="15563000" />
+      <workItem from="1667216948922" duration="4791000" />
+      <workItem from="1667300297236" duration="2732000" />
+      <workItem from="1667303710984" duration="2292000" />
+      <workItem from="1667905742148" duration="6802000" />
+      <workItem from="1668077950733" duration="147000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="181" key="#Project_Structure" timestamp="1667301570832">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="181" key="#Project_Structure/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667301570832" />
+    <state x="765" y="213" key="#com.intellij.ide.util.MemberChooser" timestamp="1667301488359">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="213" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667301488359" />
+    <state x="2610" y="269" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1667217055365">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2610" y="269" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1667217055365" />
+    <state x="836" y="299" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1667300795291">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="836" y="299" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667300795291" />
+    <state x="1159" y="217" key="#xdebugger.evaluate" timestamp="1667909231874">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1159" y="217" key="#xdebugger.evaluate/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667909231874" />
+    <state width="483" height="438" key="DebuggerActiveHint" timestamp="1667910782213">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="483" height="438" key="DebuggerActiveHint/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667910782213" />
+    <state x="886" y="299" key="FileChooserDialogImpl" timestamp="1667300797842">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="886" y="299" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667300797842" />
+    <state width="1877" height="188" key="GridCell.Tab.0.bottom" timestamp="1667956729327">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="188" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667956729327" />
+    <state width="1877" height="188" key="GridCell.Tab.0.center" timestamp="1667956729327">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="188" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667956729327" />
+    <state width="1877" height="188" key="GridCell.Tab.0.left" timestamp="1667956729327">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="188" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667956729327" />
+    <state width="1877" height="188" key="GridCell.Tab.0.right" timestamp="1667956729327">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="188" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667956729327" />
+    <state width="1877" height="188" key="GridCell.Tab.1.bottom" timestamp="1667956729328">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="188" key="GridCell.Tab.1.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667956729328" />
+    <state width="1877" height="188" key="GridCell.Tab.1.center" timestamp="1667956729327">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="188" key="GridCell.Tab.1.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667956729327" />
+    <state width="1877" height="188" key="GridCell.Tab.1.left" timestamp="1667956729327">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="188" key="GridCell.Tab.1.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667956729327" />
+    <state width="1877" height="188" key="GridCell.Tab.1.right" timestamp="1667956729327">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="188" key="GridCell.Tab.1.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667956729327" />
+    <state x="586" y="119" key="SettingsEditor" timestamp="1667300804344">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="586" y="119" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667300804344" />
+    <state x="616" y="173" width="670" height="676" key="search.everywhere.popup" timestamp="1667300405074">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="173" width="670" height="676" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1667300405074" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/mybatis-3-mybatis-3.5.1/src/main/java/org/apache/ibatis/builder/xml/XMLMapperBuilder.java</url>
+          <line>291</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/mybatis-3-mybatis-3.5.1/src/main/java/org/apache/ibatis/builder/xml/XMLMapperBuilder.java</url>
+          <line>268</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/mybatis-3-mybatis-3.5.1/src/main/java/org/apache/ibatis/type/TypeAliasRegistry.java</url>
+          <line>106</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+
+@
+java:S5164("%Call "remove()" on "localSqlSession".(æÙÂûÿÿÿÿ
+=
+java:S5164Ğ"&Use "remove()" instead of "set(null)".(úæ­Ş
+A
+java:S1181ß"%Catch Exception instead of Throwable.(•”ø¾øÿÿÿÿ
+A
+java:S1181è"%Catch Exception instead of Throwable.(•”ø¾øÿÿÿÿ
+
+java:S1192°"yDefine a constant instead of duplicating this literal "Error:  Cannot rollback.  No managed session is started." 3 times.(›ß¾Ã

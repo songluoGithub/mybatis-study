@@ -1,0 +1,17 @@
+
+m
+java:S3776f"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Å‰¥îúÿÿÿÿ
+n
+java:S3776¥"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(°éï¾üÿÿÿÿ
+K
+java:S2864¦"4Iterate over the "entrySet" instead of the "keySet".(Í·‹ë
+=
+java:S1452ô"&Remove usage of generic wildcard type.(äö½ƒ
+^
+java:S1192ƒ"GDefine a constant instead of duplicating this literal "' in '" 4 times.(“æÙ
+F
+java:S1066—"/Merge this if statement with the enclosing one.(ÒüÑ“
+c
+java:S2259½"GA "NullPointerException" could be thrown; "exception" is nullable here.(Ï·¡üÿÿÿÿ
+d
+java:S3824¿"HReplace this "Map.containsKey()" with a call to "Map.computeIfAbsent()".(Ã²§Èıÿÿÿÿ

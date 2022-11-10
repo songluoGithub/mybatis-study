@@ -1,0 +1,25 @@
+
+P
+java:S1133?"5Do not forget to remove this deprecated code someday.(·®õÅûÿÿÿÿ
+C
+java:S1123?"(Add the missing @deprecated Javadoc tag.(·®õÅûÿÿÿÿ
+P
+java:S1133E"5Do not forget to remove this deprecated code someday.(Ñ­Èûÿÿÿÿ
+C
+java:S1123E"(Add the missing @deprecated Javadoc tag.(Ñ­Èûÿÿÿÿ
+c
+java:S1192ı"LDefine a constant instead of duplicating this literal "typeHandler" 3 times.(È›Ÿ
+e
+java:S1192ú"IDefine a constant instead of duplicating this literal "jdbcType" 3 times.(Ğ’Îşÿÿÿÿ
+e
+java:S1192ø"IDefine a constant instead of duplicating this literal "property" 4 times.(®×‹îşÿÿÿÿ
+e
+java:S1192ù"IDefine a constant instead of duplicating this literal "javaType" 5 times.(¦• Ìÿÿÿÿÿ
+f
+java:S1192û"JDefine a constant instead of duplicating this literal "resultMap" 6 times.(¹Áÿíøÿÿÿÿ
+`
+java:S1192v"JDefine a constant instead of duplicating this literal "namespace" 3 times.(úœö¸
+K
+java:S1066¸"/Merge this if statement with the enclosing one.(í¼Êùÿÿÿÿ
+K
+java:S1066×"/Merge this if statement with the enclosing one.(í˜ Òûÿÿÿÿ
