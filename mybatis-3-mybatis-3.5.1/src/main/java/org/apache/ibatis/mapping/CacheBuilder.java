@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,11 +38,8 @@ import org.apache.ibatis.reflection.SystemMetaObject;
  * @author Clinton Begin
  */
 public class CacheBuilder {
-  // 命名空间，形如com.mybatis.test2.UserMapper
   private final String id;
-  // 缓存类型（PerpetualCache）
   private Class<? extends Cache> implementation;
-  // 缓存装饰器（LruCache）
   private final List<Class<? extends Cache>> decorators;
   private Integer size;
   private Long clearInterval;
@@ -92,29 +89,18 @@ public class CacheBuilder {
     return this;
   }
 
-  /**
-   * Cache 建造者模式典型build方法！！！！！！！！
-   * @return
-   */
   public Cache build() {
-    // 设置默认的缓存类型（PerpetualCache）和缓存装饰器（LruCache）
     setDefaultImplementations();
-    // 通过反射创建缓存
     Cache cache = newBaseCacheInstance(implementation, id);
     setCacheProperties(cache);
     // issue #352, do not apply decorators to custom caches
-    // 只针对默认缓存PerpetualCache 应用装饰器
     if (PerpetualCache.class.equals(cache.getClass())) {
-      // 遍历装饰器集合，应用装饰器
       for (Class<? extends Cache> decorator : decorators) {
-        // 通过反射创建装饰器实例
         cache = newCacheDecoratorInstance(decorator, cache);
-        // 应用标准的装饰器
         setCacheProperties(cache);
       }
       cache = setStandardDecorators(cache);
     } else if (!LoggingCache.class.isAssignableFrom(cache.getClass())) {
-      // 应用具有日志功能的缓存装饰器
       cache = new LoggingCache(cache);
     }
     return cache;
@@ -200,12 +186,6 @@ public class CacheBuilder {
     }
   }
 
-  /**
-   * 通过反射获取自定义缓存或者第三方缓存的实例对象（构造函数只有一String类型参数）
-   * @param cacheClass
-   * @param id
-   * @return
-   */
   private Cache newBaseCacheInstance(Class<? extends Cache> cacheClass, String id) {
     Constructor<? extends Cache> cacheConstructor = getBaseCacheConstructor(cacheClass);
     try {

@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -58,9 +58,7 @@ public class MapperRegistry {
   }
 
   public <T> void addMapper(Class<T> type) {
-    // 判断是否是接口
     if (type.isInterface()) {
-      // 判断是否存在同名接口，不允许有这种情况
       if (hasMapper(type)) {
         throw new BindingException("Type " + type + " is already known to the MapperRegistry.");
       }
@@ -93,9 +91,7 @@ public class MapperRegistry {
    */
   public void addMappers(String packageName, Class<?> superType) {
     ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<>();
-    // 查找配置路径下的所有接口以及实体等
     resolverUtil.find(new ResolverUtil.IsA(superType), packageName);
-    // 获取所有接口以及实体等
     Set<Class<? extends Class<?>>> mapperSet = resolverUtil.getClasses();
     for (Class<?> mapperClass : mapperSet) {
       addMapper(mapperClass);

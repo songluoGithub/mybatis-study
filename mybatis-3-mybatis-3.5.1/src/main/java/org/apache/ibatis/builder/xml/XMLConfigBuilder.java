@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -48,23 +48,12 @@ import org.apache.ibatis.type.JdbcType;
 
 /**
  * @author Clinton Begin
- * @author Kazuki Shimizu 基础构造器
+ * @author Kazuki Shimizu
  */
 public class XMLConfigBuilder extends BaseBuilder {
 
-  // 标记是否已经解析过配置文件
   private boolean parsed;
-  // 解析器
   private final XPathParser parser;
-  /**
-   * 获取所属环境的值(如示例中的mybatis-config.xml文件)
-   * <configuration>
-   *     <environments default="development">
-   *         ........
-   *     </environments>
-   * </configuration>
-   * 得到的值为 development
-   */
   private String environment;
   private final ReflectorFactory localReflectorFactory = new DefaultReflectorFactory();
 
@@ -89,17 +78,13 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   public XMLConfigBuilder(InputStream inputStream, String environment, Properties props) {
-    // build方法最后调用的这里，创建了一个XPathParser（解析xml全局配置文件的解析器）
     this(new XPathParser(inputStream, true, props, new XMLMapperEntityResolver()), environment, props);
   }
 
   private XMLConfigBuilder(XPathParser parser, String environment, Properties props) {
-    // 初始化 Configuration
     super(new Configuration());
     ErrorContext.instance().resource("SQL Mapper Configuration");
-    // 设置格外的属性
     this.configuration.setVariables(props);
-    // 标记初始化 false
     this.parsed = false;
     this.environment = environment;
     this.parser = parser;
@@ -110,37 +95,18 @@ public class XMLConfigBuilder extends BaseBuilder {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
     }
     parsed = true;
-    // 解析配置
-    // parser作用就是将xml配置文件转换为Document对象，并提供对应的xml标签节点，它的evalNode方法用来获取xml指定标签
     parseConfiguration(parser.evalNode("/configuration"));
     return configuration;
   }
 
-  /**
-   * 解析mybatis-config.xml（mybatis配置名字随意）的内容，对应mybatis官网路径 https://mybatis.net.cn/configuration.html
-   * @param root
-   */
   private void parseConfiguration(XNode root) {
     try {
       //issue #117 read properties first
-      // 第一步：解析properties配置
       propertiesElement(root.evalNode("properties"));
-
-      // 第二步：解析settings标签
       Properties settings = settingsAsProperties(root.evalNode("settings"));
       loadCustomVfs(settings);
-      // 设置日志Log实现
       loadCustomLogImpl(settings);
-
-      // 第三步：解析typeAliases，类型别名可以是JAVA类的一个缩写名字
-      /**
-       * <typeAliases> 标签中包含两种标签
-       *
-       * <typeAlias alias="dept" type="proj.Department"></typeAlias>
-       * <package name="xxx"/> 指定包名，Mybatis会在指定包下扫描@Alias("xx")别名注解，如果没有默认使用Bean的首字母小写的非限定类名作为别名
-       */
       typeAliasesElement(root.evalNode("typeAliases"));
-
       pluginElement(root.evalNode("plugins"));
       objectFactoryElement(root.evalNode("objectFactory"));
       objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
@@ -150,9 +116,6 @@ public class XMLConfigBuilder extends BaseBuilder {
       environmentsElement(root.evalNode("environments"));
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
       typeHandlerElement(root.evalNode("typeHandlers"));
-      /**
-       * 解析mapper.xml文件
-       */
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);
@@ -196,13 +159,10 @@ public class XMLConfigBuilder extends BaseBuilder {
   private void typeAliasesElement(XNode parent) {
     if (parent != null) {
       for (XNode child : parent.getChildren()) {
-        // 单独package包扫描指定别名
         if ("package".equals(child.getName())) {
           String typeAliasPackage = child.getStringAttribute("name");
-          // 注册到Configuration中，这里的注册和日志类名注册不一致~
           configuration.getTypeAliasRegistry().registerAliases(typeAliasPackage);
         } else {
-          // typeAlias做单独处理
           String alias = child.getStringAttribute("alias");
           String type = child.getStringAttribute("type");
           try {
@@ -260,13 +220,9 @@ public class XMLConfigBuilder extends BaseBuilder {
 
   private void propertiesElement(XNode context) throws Exception {
     if (context != null) {
-      // 先加载xml内部定义的<property>
       Properties defaults = context.getChildrenAsProperties();
-      // xml中定义的properties标签支持格式如下  <properties resource="" url="">
       String resource = context.getStringAttribute("resource");
       String url = context.getStringAttribute("url");
-
-      // properties标签属性中只能包含resource或者url 两者只得其一
       if (resource != null && url != null) {
         throw new BuilderException("The properties element cannot specify both a URL and a resource based property file reference.  Please specify one or the other.");
       }
@@ -275,12 +231,10 @@ public class XMLConfigBuilder extends BaseBuilder {
       } else if (url != null) {
         defaults.putAll(Resources.getUrlAsProperties(url));
       }
-      // 编程式加载的配置属性值（相当于加载application.properties文件）
       Properties vars = configuration.getVariables();
       if (vars != null) {
         defaults.putAll(vars);
       }
-      // 将配置属性值放入解析器、全局配置中
       parser.setVariables(defaults);
       configuration.setVariables(defaults);
     }
@@ -314,11 +268,6 @@ public class XMLConfigBuilder extends BaseBuilder {
     configuration.setConfigurationFactory(resolveClass(props.getProperty("configurationFactory")));
   }
 
-  /**
-   * 解析示例mybatis-config.xml文件中的environments属性
-   * @param context
-   * @throws Exception
-   */
   private void environmentsElement(XNode context) throws Exception {
     if (context != null) {
       if (environment == null) {
@@ -326,16 +275,6 @@ public class XMLConfigBuilder extends BaseBuilder {
       }
       for (XNode child : context.getChildren()) {
         String id = child.getStringAttribute("id");
-        /**
-         * 判断 environment标签中的id是否为environments配置的default="development"值，如示例中的mybatis-config.xml文件配置
-         * <configuration>
-         *     <environments default="development">
-         *         <environment id="development">
-         *            .............
-         *         </environment>
-         *     </environments>
-         * </configuration>
-         */
         if (isSpecifiedEnvironment(id)) {
           TransactionFactory txFactory = transactionManagerElement(child.evalNode("transactionManager"));
           DataSourceFactory dsFactory = dataSourceElement(child.evalNode("dataSource"));
@@ -420,49 +359,27 @@ public class XMLConfigBuilder extends BaseBuilder {
   private void mapperElement(XNode parent) throws Exception {
     if (parent != null) {
       for (XNode child : parent.getChildren()) {
-        /**
-         * 将包内的映射器接口实现全部注册为映射器
-         * <mappers>
-         *   <package name="org.mybatis.builder"/>
-         * </mappers>
-         */
         if ("package".equals(child.getName())) {
           String mapperPackage = child.getStringAttribute("name");
-          // 从指定包中查找 mapper 接口，并根据 mapper 接口解析映射配置
           configuration.addMappers(mapperPackage);
         } else {
           String resource = child.getStringAttribute("resource");
           String url = child.getStringAttribute("url");
           String mapperClass = child.getStringAttribute("class");
           if (resource != null && url == null && mapperClass == null) {
-            /**
-             * 使用相对于类路径的资源引用
-             * <mapper resource="org/mybatis/builder/AuthorMapper.xml"/>
-             */
             ErrorContext.instance().resource(resource);
             InputStream inputStream = Resources.getResourceAsStream(resource);
             XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
-            // 解析映射文件
             mapperParser.parse();
           } else if (resource == null && url != null && mapperClass == null) {
-            /**
-             * 使用完全限定资源定位符（URL）
-             * <mapper url="file:///var/mappers/AuthorMapper.xml"/>
-             */
             ErrorContext.instance().resource(url);
             InputStream inputStream = Resources.getUrlAsStream(url);
             XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, url, configuration.getSqlFragments());
-            // 解析映射文件
             mapperParser.parse();
           } else if (resource == null && url == null && mapperClass != null) {
-            /**
-             * 使用映射器接口实现类的完全限定类名
-             * <mapper class="org.mybatis.builder.PostMapper"/>
-             */
             Class<?> mapperInterface = Resources.classForName(mapperClass);
             configuration.addMapper(mapperInterface);
           } else {
-            // url、resource、url三个属性只允许选择一个，不然会报错
             throw new BuilderException("A mapper element may only specify a url, resource or class, but not more than one.");
           }
         }

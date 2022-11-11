@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -214,14 +214,11 @@ public class ResolverUtil<T> {
    *        classes, e.g. {@code net.sourceforge.stripes}
    */
   public ResolverUtil<T> find(Test test, String packageName) {
-    // 将全限定类名，转换为路径com.mybatis.test --->  com/mybatis/test
     String path = getPackagePath(packageName);
 
     try {
-      // 获取扫描包下所有的文件（包含xml、接口、实体等）
       List<String> children = VFS.getInstance().list(path);
       for (String child : children) {
-        // 过滤mapper.xml文件，也就是sql映射文件
         if (child.endsWith(".class")) {
           addIfMatching(test, child);
         }

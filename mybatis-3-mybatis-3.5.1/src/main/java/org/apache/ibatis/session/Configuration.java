@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -177,11 +177,9 @@ public class Configuration {
   }
 
   public Configuration() {
-    // JDBC 对应使用的 事务工厂类
     typeAliasRegistry.registerAlias("JDBC", JdbcTransactionFactory.class);
-    // MANAGED 对应使用的 事务工厂类
     typeAliasRegistry.registerAlias("MANAGED", ManagedTransactionFactory.class);
-    // JNDI 对应使用的 数据源
+
     typeAliasRegistry.registerAlias("JNDI", JndiDataSourceFactory.class);
     typeAliasRegistry.registerAlias("POOLED", PooledDataSourceFactory.class);
     typeAliasRegistry.registerAlias("UNPOOLED", UnpooledDataSourceFactory.class);
@@ -196,7 +194,7 @@ public class Configuration {
 
     typeAliasRegistry.registerAlias("XML", XMLLanguageDriver.class);
     typeAliasRegistry.registerAlias("RAW", RawLanguageDriver.class);
-    // 项目启动就会加载日志别名
+
     typeAliasRegistry.registerAlias("SLF4J", Slf4jImpl.class);
     typeAliasRegistry.registerAlias("COMMONS_LOGGING", JakartaCommonsLoggingImpl.class);
     typeAliasRegistry.registerAlias("LOG4J", Log4jImpl.class);

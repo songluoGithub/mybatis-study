@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -140,9 +140,7 @@ public class XPathParser {
   }
 
   public String evalString(Object root, String expression) {
-    // 先从标签中取出明文属性值
     String result = (String) evaluate(expression, root, XPathConstants.STRING);
-    // 交由占位服务解析器，处理占位符，替换为真实配置值
     result = PropertyParser.parse(result, variables);
     return result;
   }
@@ -217,15 +215,6 @@ public class XPathParser {
     if (node == null) {
       return null;
     }
-    /**
-     * 将解析的Node节点数据封装为XNode节点
-     * 为什么Node节点需要转换为XNode节点呢？
-     *
-     * 如在xml文件中的configuration标签，的dataSource包含配置如${jdbc.driverClassName}这时
-     * 需要读取properties配置标签获取引入的properties文件解析占位符
-     *
-     * 相当于动态配置属性值的解析
-     */
     return new XNode(this, node, variables);
   }
 

@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -89,20 +89,13 @@ public class XMLMapperBuilder extends BaseBuilder {
     this.resource = resource;
   }
 
-  /**
-   * xml解析，解析入口!!!!!!!!!!!!
-   */
   public void parse() {
-    // 检测映射文件是否已经被解析过
     if (!configuration.isResourceLoaded(resource)) {
-      // 解析Mapper文件，解析SQL
       configurationElement(parser.evalNode("/mapper"));
-      // 解析完后添加资源路径到 已解析集合 中
       configuration.addLoadedResource(resource);
-      // 通过命名空间，绑定Mapper接口
       bindMapperForNamespace();
     }
-    // 处理未解析完成的节点
+
     parsePendingResultMaps();
     parsePendingCacheRefs();
     parsePendingStatements();
@@ -114,20 +107,16 @@ public class XMLMapperBuilder extends BaseBuilder {
 
   private void configurationElement(XNode context) {
     try {
-      // 获取命名空间
       String namespace = context.getStringAttribute("namespace");
       if (namespace == null || namespace.equals("")) {
         throw new BuilderException("Mapper's namespace cannot be empty");
       }
-      // 设置命名空间信息到对象中
       builderAssistant.setCurrentNamespace(namespace);
-      // 解析xml中缓存配置
       cacheRefElement(context.evalNode("cache-ref"));
       cacheElement(context.evalNode("cache"));
       parameterMapElement(context.evalNodes("/mapper/parameterMap"));
       resultMapElements(context.evalNodes("/mapper/resultMap"));
       sqlElement(context.evalNodes("/mapper/sql"));
-      // 解析sql语句
       buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing Mapper XML. The XML location is '" + resource + "'. Cause: " + e, e);
@@ -197,31 +186,20 @@ public class XMLMapperBuilder extends BaseBuilder {
     }
   }
 
-
   private void cacheRefElement(XNode context) {
     if (context != null) {
       configuration.addCacheRef(builderAssistant.getCurrentNamespace(), context.getStringAttribute("namespace"));
-      // 创建CacheRefResolver 实例
       CacheRefResolver cacheRefResolver = new CacheRefResolver(builderAssistant, context.getStringAttribute("namespace"));
       try {
         cacheRefResolver.resolveCacheRef();
       } catch (IncompleteElementException e) {
-        // 保存到configuration中
         configuration.addIncompleteCacheRef(cacheRefResolver);
       }
     }
   }
 
-  /**
-   * 解析Cache节点配置
-   * <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/>
-   * 或者自己实现缓存，自己引入第三方缓存
-   * <cache type="com.domain.something.MyCustomCache"/>
-   * @param context
-   */
   private void cacheElement(XNode context) {
     if (context != null) {
-      // 获取自定义缓存或第三方缓存
       String type = context.getStringAttribute("type", "PERPETUAL");
       Class<? extends Cache> typeClass = typeAliasRegistry.resolveAlias(type);
       String eviction = context.getStringAttribute("eviction", "LRU");
@@ -230,9 +208,7 @@ public class XMLMapperBuilder extends BaseBuilder {
       Integer size = context.getIntAttribute("size");
       boolean readWrite = !context.getBooleanAttribute("readOnly", false);
       boolean blocking = context.getBooleanAttribute("blocking", false);
-      // 获取配置的所有子节点
       Properties props = context.getChildrenAsProperties();
-      // 构建缓存对象，放入configuration对象中
       builderAssistant.useNewCache(typeClass, evictionClass, flushInterval, size, readWrite, blocking, props);
     }
   }
@@ -277,17 +253,6 @@ public class XMLMapperBuilder extends BaseBuilder {
     return resultMapElement(resultMapNode, Collections.emptyList(), null);
   }
 
-  /**
-   * 解析resultMap标签
-   *     <resultMap id="userResultMap" type="map">
-   *         <result property="password" column="hashed_password"/>
-   *     </resultMap>
-   * @param resultMapNode
-   * @param additionalResultMappings
-   * @param enclosingType
-   * @return
-   * @throws Exception
-   */
   private ResultMap resultMapElement(XNode resultMapNode, List<ResultMapping> additionalResultMappings, Class<?> enclosingType) throws Exception {
     ErrorContext.instance().activity("processing " + resultMapNode.getValueBasedIdentifier());
     String type = resultMapNode.getStringAttribute("type",

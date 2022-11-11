@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -106,7 +106,7 @@ public class ClassLoaderWrapper {
    *
    * @param resource    - the resource to get
    * @param classLoader - the classloaders to examine
-   * @return the resource or null 采用多个classLoader尝试加载全局配置文件
+   * @return the resource or null
    */
   InputStream getResourceAsStream(String resource, ClassLoader[] classLoader) {
     for (ClassLoader cl : classLoader) {

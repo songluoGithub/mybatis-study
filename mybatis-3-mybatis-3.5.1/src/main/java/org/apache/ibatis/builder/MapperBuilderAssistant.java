@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -108,13 +108,7 @@ public class MapperBuilderAssistant extends BaseBuilder {
     }
     try {
       unresolvedCacheRef = true;
-      // 根据命名空间从全局配置对象（Configuration）中查找相应的缓存实例
       Cache cache = configuration.getCache(namespace);
-      /**
-       * 为空的情况分为两种
-       * 1、在配置文件<cache type="com.domain.something.MyCustomCache">，配置的type不存在，也就是命名空间有误
-       * 2、所依赖的命名空间还未加载
-       */
       if (cache == null) {
         throw new IncompleteElementException("No cache for namespace '" + namespace + "' could be found.");
       }
@@ -133,7 +127,6 @@ public class MapperBuilderAssistant extends BaseBuilder {
       boolean readWrite,
       boolean blocking,
       Properties props) {
-    // 使用建造者模式构建缓存实例，解释查看README.md
     Cache cache = new CacheBuilder(currentNamespace)
         .implementation(valueOrDefault(typeClass, PerpetualCache.class))
         .addDecorator(valueOrDefault(evictionClass, LruCache.class))
@@ -143,7 +136,6 @@ public class MapperBuilderAssistant extends BaseBuilder {
         .blocking(blocking)
         .properties(props)
         .build();
-    // configuration存储的cache信息是一个Map，key是cache的id也就是命名空间（示例中com.mybatis.test2.UserMapper），value是Cache对象
     configuration.addCache(cache);
     currentCache = cache;
     return cache;

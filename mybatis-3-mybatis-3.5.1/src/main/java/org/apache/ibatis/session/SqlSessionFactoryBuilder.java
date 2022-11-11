@@ -1,5 +1,5 @@
 /**
- *    Copyright ${license.git.copyrightYears} the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -46,9 +46,7 @@ public class SqlSessionFactoryBuilder {
 
   public SqlSessionFactory build(Reader reader, String environment, Properties properties) {
     try {
-      // 创建配置文件解析器 解析 mybatis-config.xml
       XMLConfigBuilder parser = new XMLConfigBuilder(reader, environment, properties);
-      // 调用生成的parse()方法解析配置文件，build方法生成Configuration对象
       return build(parser.parse());
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error building SqlSession.", e);
@@ -76,13 +74,7 @@ public class SqlSessionFactoryBuilder {
 
   public SqlSessionFactory build(InputStream inputStream, String environment, Properties properties) {
     try {
-      // 第一个核心组件产生XMLConfigBuilder  基于xml的配置建造器（建造器模式的体现）
       XMLConfigBuilder parser = new XMLConfigBuilder(inputStream, environment, properties);
-      /**
-       * 分为两步
-       * 1、调用XMLConfigBuilder的parse()方法返回Configuration
-       * 2、调用SqlSessionFactoryBuilder的build方法生成SqlSessionFactory
-       */
       return build(parser.parse());
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error building SqlSession.", e);

@@ -1,8 +1,0 @@
-
-[
-java:S1854">Remove this useless assignment to local variable "sqlSession".(å„Ş8Áş²—Ã0
-L
-java:S1481"/Remove this unused "sqlSession" local variable.(å„Ş8Äş²—Ã0
-T	java:S106"9Replace this use of System.out or System.err by a logger.(íËË=8µŠ—Ã0
-e
-java:S2095"HUse try-with-resources or close this "SqlSession" in a "finally" clause.(å„Ş8ºŠ—Ã0

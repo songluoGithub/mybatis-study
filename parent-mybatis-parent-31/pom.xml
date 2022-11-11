@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright ${license.git.copyrightYears} the original author or authors.
+       Copyright 2010-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -22,6 +22,9 @@
   <groupId>org.mybatis</groupId>
   <artifactId>mybatis-parent</artifactId>
   <version>31</version>
+  <modules>
+    <module>mybatis-test</module>
+  </modules>
   <packaging>pom</packaging>
 
   <name>mybatis-parent</name>
@@ -269,7 +272,7 @@
     <clirr.comparisonVersion>30</clirr.comparisonVersion>
     <formatter.config>eclipse-formatter-config-2space.xml</formatter.config>
     <gcu.product>${project.name}</gcu.product>
-    <maven.min-version>3.2.5</maven.min-version>
+    <maven.min-version>3.0.5</maven.min-version>
     <module.name>org.mybatis.parent</module.name>
     <spotbugs.onlyAnalyze />
 
@@ -327,7 +330,7 @@
     <release.version>2.5.3</release.version>
     <resource.version>3.1.0</resource.version>
     <scm.version>1.11.1</scm.version>
-    <shade.version>3.2.1</shade.version>
+    <shade.version>3.2.4</shade.version>
     <site.version>3.7.1</site.version>
     <source.version>3.0.1</source.version>
     <spotbugs.version>3.1.10</spotbugs.version>

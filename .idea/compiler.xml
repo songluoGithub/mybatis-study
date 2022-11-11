@@ -6,14 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mybatis-test" />
         <module name="mybatis" />
+        <module name="mybatis_test" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="8">
       <module name="mybatis" target="1.8" />
       <module name="mybatis-parent" target="1.8" />
-      <module name="mybatis-test" target="1.8" />
+      <module name="mybatis_test" target="1.8" />
+      <module name="mybatistest" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
