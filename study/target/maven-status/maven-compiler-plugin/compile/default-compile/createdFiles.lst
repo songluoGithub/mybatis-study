@@ -1,0 +1,4 @@
+dao\impl\DepartmentDaoImpl.class
+proj\Department.class
+dao\DepartmentDao.class
+MyTest.class
