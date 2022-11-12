@@ -106,7 +106,7 @@ public class ClassLoaderWrapper {
    *
    * @param resource    - the resource to get
    * @param classLoader - the classloaders to examine
-   * @return the resource or null
+   * @return the resource or null 多个类加载器挨个加载资源从xml变为二进制流
    */
   InputStream getResourceAsStream(String resource, ClassLoader[] classLoader) {
     for (ClassLoader cl : classLoader) {
@@ -201,6 +201,7 @@ public class ClassLoaderWrapper {
 
   }
 
+  // 获取多个类加载器
   ClassLoader[] getClassLoaders(ClassLoader classLoader) {
     return new ClassLoader[]{
         classLoader,

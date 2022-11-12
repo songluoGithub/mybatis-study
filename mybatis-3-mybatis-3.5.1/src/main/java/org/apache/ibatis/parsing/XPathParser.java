@@ -41,7 +41,9 @@ import org.xml.sax.SAXParseException;
 
 /**
  * @author Clinton Begin
- * @author Kazuki Shimizu
+ * @author Kazuki Shimizu 解析 xml 全局配置文件的解析器
+ *
+ * 作用：将xml文件转换为Document对象
  */
 public class XPathParser {
 
@@ -140,7 +142,9 @@ public class XPathParser {
   }
 
   public String evalString(Object root, String expression) {
+    // 先获取明文属性值
     String result = (String) evaluate(expression, root, XPathConstants.STRING);
+    // 替换真实配置值
     result = PropertyParser.parse(result, variables);
     return result;
   }
@@ -215,11 +219,18 @@ public class XPathParser {
     if (node == null) {
       return null;
     }
+    /**
+     * 注意这里将Node转换为XNode
+     * 为什么呢？
+     * Java自带的Node确实可以存放配置信息，但是当配置信息中存在占位符如，dataSource的property标签中出现${driver}，这时Node只能取到值为${driver}
+     * 而XNode会读取配置文件如properties标签，properties文件等等替换占位符~
+     */
     return new XNode(this, node, variables);
   }
 
   private Object evaluate(String expression, Object root, QName returnType) {
     try {
+      // 使用javax的Xpath解析xml
       return xpath.evaluate(expression, root, returnType);
     } catch (Exception e) {
       throw new BuilderException("Error evaluating XPath.  Cause: " + e, e);

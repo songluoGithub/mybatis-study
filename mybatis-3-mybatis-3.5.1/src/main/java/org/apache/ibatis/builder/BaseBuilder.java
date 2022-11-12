@@ -29,7 +29,7 @@ import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 
 /**
- * @author Clinton Begin
+ * @author Clinton Begin 基础构造器
  */
 public abstract class BaseBuilder {
   protected final Configuration configuration;

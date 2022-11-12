@@ -107,9 +107,15 @@ public class TypeAliasRegistry {
       if (string == null) {
         return null;
       }
-      // issue #748
+      // issue #748 忽略大小写
       String key = string.toLowerCase(Locale.ENGLISH);
       Class<T> value;
+      /**
+       * 通过别名获取具体实现名称
+       * 别名赋值由两部分构成
+       * 1、由加载Configuration时调用TypeAliasRegistry.registerAlias注册
+       * 2、在创建TypeAliasRegistry时由构造方法调用TypeAliasRegistry.registerAlias注册
+       */
       if (typeAliases.containsKey(key)) {
         value = (Class<T>) typeAliases.get(key);
       } else {

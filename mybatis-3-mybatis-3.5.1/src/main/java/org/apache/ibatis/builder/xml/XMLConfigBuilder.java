@@ -78,6 +78,7 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   public XMLConfigBuilder(InputStream inputStream, String environment, Properties props) {
+    // 注意这里创建了一个XPathParser对象
     this(new XPathParser(inputStream, true, props, new XMLMapperEntityResolver()), environment, props);
   }
 
@@ -95,6 +96,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
     }
     parsed = true;
+    // 开始解析标签中的内容
     parseConfiguration(parser.evalNode("/configuration"));
     return configuration;
   }
@@ -102,10 +104,15 @@ public class XMLConfigBuilder extends BaseBuilder {
   private void parseConfiguration(XNode root) {
     try {
       //issue #117 read properties first
+      // 解析properties配置
       propertiesElement(root.evalNode("properties"));
+
+      // 解析settings配置
       Properties settings = settingsAsProperties(root.evalNode("settings"));
       loadCustomVfs(settings);
+      // 加载日志插件
       loadCustomLogImpl(settings);
+
       typeAliasesElement(root.evalNode("typeAliases"));
       pluginElement(root.evalNode("plugins"));
       objectFactoryElement(root.evalNode("objectFactory"));
@@ -151,6 +158,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+  // 通过settings标签中配置的日志别名，得到具体的日志类，然后设置到Configuration中
   private void loadCustomLogImpl(Properties props) {
     Class<? extends Log> logImpl = resolveClass(props.getProperty("logImpl"));
     configuration.setLogImpl(logImpl);
@@ -218,11 +226,26 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+  /**
+   * 配置文件格式
+   * <properties resource="application1.properties" url="xxx">
+   *     <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+   * </properties>
+   *
+   * propertie会读取三个地方的配置
+   * 1、在配置文件中读取properties的子标签property
+   * 2、读取properties标签的resource以及url属性对应的链接
+   * 3、读取编程式配置，如SqlSessionFactoryBuilder().build(xml,properties)传入的Properties对象
+   * @param context
+   * @throws Exception
+   */
   private void propertiesElement(XNode context) throws Exception {
     if (context != null) {
+      // 获取properties的所有子标签property
       Properties defaults = context.getChildrenAsProperties();
       String resource = context.getStringAttribute("resource");
       String url = context.getStringAttribute("url");
+      // url和resource只能存在一个
       if (resource != null && url != null) {
         throw new BuilderException("The properties element cannot specify both a URL and a resource based property file reference.  Please specify one or the other.");
       }
@@ -231,10 +254,14 @@ public class XMLConfigBuilder extends BaseBuilder {
       } else if (url != null) {
         defaults.putAll(Resources.getUrlAsProperties(url));
       }
+
+      // 编程式加载的配置属性值
       Properties vars = configuration.getVariables();
       if (vars != null) {
         defaults.putAll(vars);
       }
+
+      // 编程式加载配置优先级最高，其次是url或resource中定义的，再其次是property标签
       parser.setVariables(defaults);
       configuration.setVariables(defaults);
     }
