@@ -28,7 +28,8 @@
 
     <!--  DB_VENDOR固定 -->
     <databaseIdProvider type="DB_VENDOR">
-        <property name="MySql" value="mysql"/>
+        <property name="MySQL" value="mysql"/>
+        <property name="PgSQL" value="postgresql"/>
     </databaseIdProvider>
     
     <mappers>

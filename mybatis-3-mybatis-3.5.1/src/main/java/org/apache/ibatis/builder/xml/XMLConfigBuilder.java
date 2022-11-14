@@ -134,6 +134,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       // 数据库厂商标识解析
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
 
+      // 注册类型处理器
       typeHandlerElement(root.evalNode("typeHandlers"));
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
@@ -371,12 +372,19 @@ public class XMLConfigBuilder extends BaseBuilder {
       if ("VENDOR".equals(type)) {
         type = "DB_VENDOR";
       }
+      // 得到databaseIdProvider标签下所有的property
       Properties properties = context.getChildrenAsProperties();
       databaseIdProvider = (DatabaseIdProvider) resolveClass(type).newInstance();
       databaseIdProvider.setProperties(properties);
     }
     Environment environment = configuration.getEnvironment();
     if (environment != null && databaseIdProvider != null) {
+      /**
+       * 根据用户配置的environments标签，通过数据源得到用户连接的数据库类型，从而得到当前数据库类型的databaseId
+       * 就是遍历property标签，得到name值和数据库类型匹配的记录，从而得到其value值
+       *
+       * 这样为后面解析mapper.xml做准备，需要注意的是databaseId可以为空！
+       */
       String databaseId = databaseIdProvider.getDatabaseId(environment.getDataSource());
       configuration.setDatabaseId(databaseId);
     }
@@ -404,6 +412,14 @@ public class XMLConfigBuilder extends BaseBuilder {
     throw new BuilderException("Environment declaration requires a DataSourceFactory.");
   }
 
+  /**
+   * 注册类型处理器
+   * <typeHandlers>
+   *     <typeHandler handler="" javaType="" jdbcType=""></typeHandler>
+   *     <package name=""></package>
+   * </typeHandlers>
+   * @param parent
+   */
   private void typeHandlerElement(XNode parent) {
     if (parent != null) {
       for (XNode child : parent.getChildren()) {
