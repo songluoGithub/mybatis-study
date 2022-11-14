@@ -113,15 +113,27 @@ public class XMLConfigBuilder extends BaseBuilder {
       // 加载日志插件
       loadCustomLogImpl(settings);
 
+      // 解析typeAliasesElement配置
       typeAliasesElement(root.evalNode("typeAliases"));
+
+      // 注册plugins插件（可以自定义拦截器，但这个拦截器由mybatis创建spring无法管理）
       pluginElement(root.evalNode("plugins"));
+
+      // 注册factory（三种都类似）
       objectFactoryElement(root.evalNode("objectFactory"));
       objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
       reflectorFactoryElement(root.evalNode("reflectorFactory"));
+
+      // 将setting中的所有配置应用到全局的Configuration中
       settingsElement(settings);
+
       // read it after objectFactory and objectWrapperFactory issue #631
+      // 数据源环境配置
       environmentsElement(root.evalNode("environments"));
+
+      // 数据库厂商标识解析
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
+
       typeHandlerElement(root.evalNode("typeHandlers"));
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
@@ -164,11 +176,20 @@ public class XMLConfigBuilder extends BaseBuilder {
     configuration.setLogImpl(logImpl);
   }
 
+  /**
+   * typeAliases标签如下
+   * <typeAliases>
+   *     <typeAlias alias="xx" type="xxx"></typeAlias>
+   *     <package name="xxxx"/>
+   * </typeAliases>
+   * @param parent
+   */
   private void typeAliasesElement(XNode parent) {
     if (parent != null) {
       for (XNode child : parent.getChildren()) {
         if ("package".equals(child.getName())) {
           String typeAliasPackage = child.getStringAttribute("name");
+          // 注册别名，和settings日志别名类似
           configuration.getTypeAliasRegistry().registerAliases(typeAliasPackage);
         } else {
           String alias = child.getStringAttribute("alias");
@@ -176,6 +197,7 @@ public class XMLConfigBuilder extends BaseBuilder {
           try {
             Class<?> clazz = Resources.classForName(type);
             if (alias == null) {
+              // 如果别名为空，那么默认注册为该类的全限定简单类名
               typeAliasRegistry.registerAlias(clazz);
             } else {
               typeAliasRegistry.registerAlias(alias, clazz);
@@ -295,6 +317,23 @@ public class XMLConfigBuilder extends BaseBuilder {
     configuration.setConfigurationFactory(resolveClass(props.getProperty("configurationFactory")));
   }
 
+  /**
+   * 解析配置文件中的environments节点
+   *
+   * <environments default="development">
+   *     <environment id="development">
+   *         <transactionManager type="JDBC"></transactionManager>
+   *         <dataSource type="POOLED">
+   *             <property name="driver" value="xxx"/>
+   *             <property name="url" value="jdbc:mysql://xxxx:3306/test"/>
+   *             <property name="username" value="xxx"/>
+   *             <property name="password" value="xxx"/>
+   *         </dataSource>
+   *     </environment>
+   * </environments>
+   * @param context
+   * @throws Exception
+   */
   private void environmentsElement(XNode context) throws Exception {
     if (context != null) {
       if (environment == null) {
@@ -302,10 +341,12 @@ public class XMLConfigBuilder extends BaseBuilder {
       }
       for (XNode child : context.getChildren()) {
         String id = child.getStringAttribute("id");
+        // 找到environment标签中的id属性和environments中的default属性对应的标签
         if (isSpecifiedEnvironment(id)) {
           TransactionFactory txFactory = transactionManagerElement(child.evalNode("transactionManager"));
           DataSourceFactory dsFactory = dataSourceElement(child.evalNode("dataSource"));
           DataSource dataSource = dsFactory.getDataSource();
+          // 简单构造器，构造Environment对象  Builder静态内部类
           Environment.Builder environmentBuilder = new Environment.Builder(id)
               .transactionFactory(txFactory)
               .dataSource(dataSource);
@@ -315,6 +356,13 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+  /**
+   * <databaseIdProvider type="DB_VENDOR">
+   *     <property name="MySql" value="mysql"/>
+   * </databaseIdProvider>
+   * @param context
+   * @throws Exception
+   */
   private void databaseIdProviderElement(XNode context) throws Exception {
     DatabaseIdProvider databaseIdProvider = null;
     if (context != null) {

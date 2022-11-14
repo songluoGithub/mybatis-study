@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <properties>
+    <properties resource="application1.properties">
         <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
     </properties>
     <settings>
@@ -9,6 +9,7 @@
     </settings>
     <typeAliases>
         <typeAlias alias="dept" type="proj.Department"></typeAlias>
+        <package name="proj"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -24,6 +25,12 @@
             </dataSource>
         </environment>
     </environments>
+
+    <!--  DB_VENDOR固定 -->
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="MySql" value="mysql"/>
+    </databaseIdProvider>
+    
     <mappers>
         <mapper resource="com/mybatis/test/DepartmentMapper.xml"></mapper>
     </mappers>
