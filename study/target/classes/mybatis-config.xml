@@ -31,9 +31,10 @@
         <property name="MySQL" value="mysql"/>
         <property name="PgSQL" value="postgresql"/>
     </databaseIdProvider>
-    
+
     <mappers>
-        <mapper resource="com/mybatis/test/DepartmentMapper.xml"></mapper>
+        <!--<mapper resource="com/mybatis/test/DepartmentMapper.xml"></mapper>-->
+        <package name="dao"/>
     </mappers>
     <!--        <mappers>-->
     <!--            <package name="com.mybatis.test"/>-->

@@ -11,6 +11,12 @@
         <typeAlias alias="dept" type="proj.Department"></typeAlias>
         <package name="proj"/>
     </typeAliases>
+
+    <typeHandlers>
+        <typeHandler handler="" javaType="" jdbcType=""></typeHandler>
+        <package name=""></package>
+    </typeHandlers>
+
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC">
@@ -32,13 +38,9 @@
         <property name="PgSQL" value="postgresql"/>
     </databaseIdProvider>
 
-    <typeHandlers>
-        <typeHandler handler="" javaType="" jdbcType=""></typeHandler>
-        <package name=""></package>
-    </typeHandlers>
-
     <mappers>
-        <mapper resource="com/mybatis/test/DepartmentMapper.xml"></mapper>
+        <mapper resource="com/mybatis/test/DepartmentMapper.xml" class="" url=""></mapper>
+        <package name=""></package>
     </mappers>
     <!--        <mappers>-->
     <!--            <package name="com.mybatis.test"/>-->
