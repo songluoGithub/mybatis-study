@@ -1,12 +1,13 @@
 
 
 import dao.DepartmentDao;
-import dao.impl.DepartmentDaoImpl;
+import dao.UserDao;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import proj.Department;
+import proj.User;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +26,13 @@ public class MyTest {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(xml,properties);
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        DepartmentDao departmentDao = new DepartmentDaoImpl(sqlSessionFactory);
+        // 动态代理获取实例对象
+        DepartmentDao departmentDao = sqlSession.getMapper(DepartmentDao.class);
         List<Department> departmentList = departmentDao.findAll();
         departmentList.forEach(System.out::println);
+
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> allLazy = userDao.findAllLazy();
+        allLazy.forEach(System.out::println);
     }
 }
