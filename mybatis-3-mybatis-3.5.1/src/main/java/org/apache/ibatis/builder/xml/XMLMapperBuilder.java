@@ -54,9 +54,13 @@ import org.apache.ibatis.type.TypeHandler;
  */
 public class XMLMapperBuilder extends BaseBuilder {
 
+  // 解析xml文件的解析器
   private final XPathParser parser;
+  // 构造Mapper的建造器助手，内部使用了一些Builder，帮我们构造ResultMap、MappedStatement等
   private final MapperBuilderAssistant builderAssistant;
+  // 封装了可重用的SQL片段（xml中如<sql>标签）
   private final Map<String, XNode> sqlFragments;
+  // mapper.xml的文件路径
   private final String resource;
 
   @Deprecated
@@ -83,6 +87,7 @@ public class XMLMapperBuilder extends BaseBuilder {
 
   private XMLMapperBuilder(XPathParser parser, Configuration configuration, String resource, Map<String, XNode> sqlFragments) {
     super(configuration);
+    // 构建助手在这里创建！！！！
     this.builderAssistant = new MapperBuilderAssistant(configuration, resource);
     this.parser = parser;
     this.sqlFragments = sqlFragments;
@@ -90,14 +95,21 @@ public class XMLMapperBuilder extends BaseBuilder {
   }
 
   public void parse() {
+    // 1、如果当前资源没有被加载过
     if (!configuration.isResourceLoaded(resource)) {
+      // 2、解析mapper元素
       configurationElement(parser.evalNode("/mapper"));
+      // 解析完xml需要存起来，其它可以用来验证是否被加载过
       configuration.addLoadedResource(resource);
+      // 3、解析和绑定命名空间
       bindMapperForNamespace();
     }
 
+    // 4、解析resultMap
     parsePendingResultMaps();
+    // 5、解析cache-ref
     parsePendingCacheRefs();
+    // 6、解析声明的statement
     parsePendingStatements();
   }
 
