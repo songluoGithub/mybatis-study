@@ -22,4 +22,7 @@
     <delete id="deleteById" parameterType="string">
         delete from tbl_department where id = #{id}
     </delete>
+
+    <!-- 开启xml的二级缓存，全局二级缓存默认开启settings中的cacheEnabled配置，默认true -->
+    <cache></cache>
 </mapper>

@@ -41,5 +41,6 @@
     <mappers>
         <mapper resource="com/mybatis/test/user.xml"></mapper>
         <mapper resource="com/mybatis/test/department.xml"></mapper>
+        <mapper resource="com/mybatis/test/dept2.xml"></mapper>
     </mappers>
 </configuration>

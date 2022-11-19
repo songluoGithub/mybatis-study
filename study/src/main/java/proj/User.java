@@ -2,6 +2,9 @@ package proj;
 
 import java.util.Date;
 
+/**
+ * @author Administrator
+ */
 public class User {
     private String id;
 

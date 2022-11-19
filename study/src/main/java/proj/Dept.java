@@ -1,19 +1,32 @@
 package proj;
 
-import java.io.Serializable;
-
-public class Department implements Serializable {
-    private String id;
-
+/**
+ * @date: 2022/11/19 15:47
+ * @author: luosong
+ * @version: 1.0
+ * @description: Dept
+ */
+public class Dept {
+    private int id;
     private String name;
-
     private String tel;
 
-    public String getId() {
+
+    public Dept(int id, String name, String tel) {
+        this.id = id;
+        this.name = name;
+        this.tel = tel;
+    }
+
+    public Dept(){
+
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -35,8 +48,8 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "Department{" +
-                "id='" + id + '\'' +
+        return "Dept{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", tel='" + tel + '\'' +
                 '}';

@@ -8,4 +8,6 @@ public interface UserDao {
     List<User> findAll();
 
     List<User> findAllLazy();
+
+    int cleanCache();
 }
