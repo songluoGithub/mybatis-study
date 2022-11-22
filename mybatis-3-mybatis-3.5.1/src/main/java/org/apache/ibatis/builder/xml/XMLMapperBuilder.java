@@ -117,18 +117,33 @@ public class XMLMapperBuilder extends BaseBuilder {
     return sqlFragments.get(refid);
   }
 
+  /**
+   * 解析mapper.xml文件
+   *<mapper namespace="xxxxx">
+   *     <select id="xxx" resultType="xxxx">
+   *         xxxxxx
+   *     </select>
+   * </mapper>
+   * @param context
+   */
   private void configurationElement(XNode context) {
     try {
+      // 提取命名空间
       String namespace = context.getStringAttribute("namespace");
       if (namespace == null || namespace.equals("")) {
         throw new BuilderException("Mapper's namespace cannot be empty");
       }
       builderAssistant.setCurrentNamespace(namespace);
+      // 解析cache、cache-ref
       cacheRefElement(context.evalNode("cache-ref"));
       cacheElement(context.evalNode("cache"));
+      // 解析提取parameterMap(官方文档称已废弃，不看了)
       parameterMapElement(context.evalNodes("/mapper/parameterMap"));
+      // 解析提取resultMap
       resultMapElements(context.evalNodes("/mapper/resultMap"));
+      // 解析封装SQL片段
       sqlElement(context.evalNodes("/mapper/sql"));
+      // 构造Statement 业务sql
       buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing Mapper XML. The XML location is '" + resource + "'. Cause: " + e, e);
@@ -253,6 +268,7 @@ public class XMLMapperBuilder extends BaseBuilder {
 
   private void resultMapElements(List<XNode> list) throws Exception {
     for (XNode resultMapNode : list) {
+      // 防止某个resultMap解析失败后其它resultMap无法解析
       try {
         resultMapElement(resultMapNode);
       } catch (IncompleteElementException e) {
@@ -267,10 +283,12 @@ public class XMLMapperBuilder extends BaseBuilder {
 
   private ResultMap resultMapElement(XNode resultMapNode, List<ResultMapping> additionalResultMappings, Class<?> enclosingType) throws Exception {
     ErrorContext.instance().activity("processing " + resultMapNode.getValueBasedIdentifier());
+    // 解析resultMap映射的目标结果集实体类型
     String type = resultMapNode.getStringAttribute("type",
         resultMapNode.getStringAttribute("ofType",
             resultMapNode.getStringAttribute("resultType",
                 resultMapNode.getStringAttribute("javaType"))));
+    // 根据类型或别名，去Configuration中查找对应类
     Class<?> typeClass = resolveClass(type);
     if (typeClass == null) {
       typeClass = inheritEnclosingType(resultMapNode, enclosingType);
@@ -279,12 +297,16 @@ public class XMLMapperBuilder extends BaseBuilder {
     List<ResultMapping> resultMappings = new ArrayList<>();
     resultMappings.addAll(additionalResultMappings);
     List<XNode> resultChildren = resultMapNode.getChildren();
+    // 解析resultMap的子标签，并封装为resultMapping
     for (XNode resultChild : resultChildren) {
+      // 构造器映射
       if ("constructor".equals(resultChild.getName())) {
         processConstructorElement(resultChild, typeClass, resultMappings);
       } else if ("discriminator".equals(resultChild.getName())) {
+        // 鉴别器映射
         discriminator = processDiscriminatorElement(resultChild, typeClass, resultMappings);
       } else {
+        // 普通映射
         List<ResultFlag> flags = new ArrayList<>();
         if ("id".equals(resultChild.getName())) {
           flags.add(ResultFlag.ID);
@@ -292,14 +314,17 @@ public class XMLMapperBuilder extends BaseBuilder {
         resultMappings.add(buildResultMappingFromContext(resultChild, typeClass, flags));
       }
     }
+    // 获取resultMap的id、继承的resultMap id、autoMapping
     String id = resultMapNode.getStringAttribute("id",
             resultMapNode.getValueBasedIdentifier());
     String extend = resultMapNode.getStringAttribute("extends");
     Boolean autoMapping = resultMapNode.getBooleanAttribute("autoMapping");
+    // 利用ResultMapResolver处理resultMap
     ResultMapResolver resultMapResolver = new ResultMapResolver(builderAssistant, id, typeClass, extend, discriminator, resultMappings, autoMapping);
     try {
       return resultMapResolver.resolve();
     } catch (IncompleteElementException  e) {
+      // 解析失败，说明resultMap标签的信息不完整，记录在全局Configuration中，并抛出异常
       configuration.addIncompleteResultMap(resultMapResolver);
       throw e;
     }
@@ -385,6 +410,7 @@ public class XMLMapperBuilder extends BaseBuilder {
     return true;
   }
 
+  // 就是将一行<result property="" column="" /> 封装为ResultMapping
   private ResultMapping buildResultMappingFromContext(XNode context, Class<?> resultType, List<ResultFlag> flags) throws Exception {
     String property;
     if (flags.contains(ResultFlag.CONSTRUCTOR)) {
